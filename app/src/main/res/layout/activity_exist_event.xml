@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/partiaLogoColor"
+    >
+
+    <LinearLayout
+        android:layout_width="271dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="74dp"
+            android:gravity="center"
+            android:text="@string/name_of_the_event"
+            android:textSize="24sp" />
+
+        <TextView
+            android:id="@+id/textView_eventDescription"
+            android:layout_width="252dp"
+            android:layout_height="214dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/whiteColor"
+            android:text="Event description" />
+
+        <EditText
+            android:id="@+id/editText_participantsList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text=" Participants list" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_budget"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="105dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/btnColor_startMenu"
+            android:text="budget" />
+
+        <Button
+            android:id="@+id/button_rideBoard"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/btnColor_startMenu"
+            android:text=" Catch/add a ride " />
+
+        <Button
+            android:id="@+id/button_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/btnColor_startMenu"
+            android:text="Chat" />
+
+        <Button
+            android:id="@+id/button_equipmentList"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:background="@color/btnColor_startMenu"
+            android:text="equipment list" />
+    </LinearLayout>
+</LinearLayout>

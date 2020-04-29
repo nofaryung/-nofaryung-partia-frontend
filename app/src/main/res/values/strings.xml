@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">PARTIA</string>
+    <string name="join_event">join event</string>
+    <string name="create_new_event">create new event</string>
+    <string name="todo">TODO</string>
+    <string name="pincode">PINCode</string>
+    <string name="cheers">Cheers</string>
+    <string name="title">Title</string>
+    <string name="name_of_the_event">Name of the event</string>
+    <string name="birthday_party">Birthday party</string>
+    <string name="what_s_the_occasion">What\'s the occasion</string>
+    <string name="_1_4">1/4</string>
+    <string name="bachelorette_party">Bachelorette party</string>
+    <string name="gathering">Gathering</string>
+    <string name="next">Next</string>
+</resources>

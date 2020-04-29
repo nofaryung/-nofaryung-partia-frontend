@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/partiaLogoColor"
+
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FFE2FC"
+        android:orientation="horizontal"
+        tools:layout_editor_absoluteX="-16dp"
+        tools:layout_editor_absoluteY="72dp">
+
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="206dp"
+            android:layout_weight="1"
+            android:contentDescription="@string/todo"
+            app:srcCompat="@drawable/partia_logo" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_MakeNewEventMenu"
+        android:layout_width="219dp"
+        android:layout_height="148dp"
+        android:layout_below="@+id/linearLayout"
+        android:layout_alignBaseline="@id/linearLayout"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="95dp"
+        android:layout_marginLeft="95dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="89dp"
+        android:layout_marginRight="89dp"
+        android:background="@drawable/button_bg_round"
+        android:onClick="createNewEvent_btn_clicked"
+        android:text="@string/create_new_event"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/btn_JoinExistEventMenu"
+        android:layout_width="219dp"
+        android:layout_height="148dp"
+        android:layout_below="@+id/btn_MakeNewEventMenu"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginStart="92dp"
+        android:layout_marginLeft="92dp"
+        android:layout_marginTop="38dp"
+        android:layout_marginEnd="92dp"
+        android:layout_marginRight="92dp"
+        android:background="@drawable/button_bg_round"
+        android:onClick="joinEvent_btn_clicked"
+        android:shadowColor="#00D87A7A"
+        android:singleLine="false"
+        android:text="@string/join_event"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
+
+</RelativeLayout>
