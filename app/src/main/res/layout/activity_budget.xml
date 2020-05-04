@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityBudget"
+    android:background="@color/partiaLogoColor"
+    >
+
+    <TextView
+        android:id="@+id/textView_budget"
+        android:layout_width="225dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:background="@drawable/button_bg_round"
+        android:gravity="center"
+        android:text="Total budget"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:layout_marginBottom="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+
+        android:id="@+id/textview_currentTotalBudget"
+        android:layout_width="265dp"
+        android:layout_height="72dp"
+        android:layout_below="@id/textView_budget"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/textview_bg_pincode"
+        android:gravity="center"
+        android:text="3,500"
+
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textview_balance"
+        android:gravity="center"
+        android:layout_below="@id/textview_currentTotalBudget"
+        android:layout_marginTop="50dp"
+        android:layout_centerHorizontal="true"
+        android:text="Balance"
+        android:layout_marginBottom="15dp"/>
+
+
+    <TextView
+
+        android:id="@+id/textview_currentBalance"
+        android:layout_width="265dp"
+        android:layout_height="72dp"
+        android:layout_below="@id/textview_balance"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/textview_bg_pincode"
+        android:gravity="center"
+        android:text="3,000"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+
+    <Button
+        android:id="@+id/button_split"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/textview_currentBalance"
+        android:background="@drawable/button_bg_round"
+        android:gravity="center"
+        android:text="Split"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_marginBottom="25dp"
+        android:onClick="split_btn_clicked"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/button_back"
+        android:layout_width="100dp"
+        android:layout_height="80dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/button_split"
+        android:background="@drawable/button_bg_round"
+        android:gravity="center"
+        android:text="Back"
+        android:textColor="#FFFFFF"
+        android:textSize="25sp"
+        android:layout_marginBottom="25dp"
+        android:onClick="back_btn_clicked"
+        android:textStyle="bold" />
+</RelativeLayout>
