@@ -6,91 +6,137 @@
     android:layout_height="match_parent"
     tools:context=".ActivityStatistics">
 
-    <TextView
-        android:padding="16dp"
-        android:id="@+id/textView_pageCount"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1/3" />
-
-    <TextView
-        android:id="@+id/textView_Query"
-        android:layout_width="225dp"
-        android:layout_height="80dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="92dp"
-        android:layout_marginTop="35dp"
-        android:layout_marginEnd="92dp"
-        android:background="@drawable/button_bg_round"
-        android:gravity="center"
-        android:text="Choose amount and type of meal"
-        android:textColor="#FFFFFF"
-        android:textSize="20sp"
-        android:layout_marginBottom="5dp"
-        android:textStyle="bold"
-        />
-
-    <NumberPicker
-        android:id="@+id/numberCounter"
-        style="@android:style/Widget.Material.NumberPicker"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/textView_Query"
-        android:layout_alignParentTop="false"
-        android:layout_centerInParent="true"
-        android:orientation="vertical" />
-
-
-<TextView
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerHorizontal="true"
-    android:text="Type of meal:"
-    android:layout_above="@id/rg"
-    ></TextView>
-
-    <RadioGroup
-        android:id="@+id/rg"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-      >
-
-
-        <RadioButton
-            android:id="@+id/radio_button_op1"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:text="Meat"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/radio_button_op2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:text="Dairy"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <RadioButton
-            android:id="@+id/radio_button_op3"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp"
-            android:text="Snacks"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-    </RadioGroup>
-
 
     <com.github.mikephil.charting.charts.PieChart
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/pieChart"
-/>
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="355dp">
+
+
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        >
+
+        <RadioGroup
+            android:id="@+id/rg"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:baselineAligned="false"
+            android:gravity="center_horizontal"
+            android:layout_marginLeft="10dp">
+
+
+            <RadioButton
+                android:id="@+id/radio_button_op1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="Vegetarian"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/radio_button_op2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="Vegan"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <RadioButton
+                android:id="@+id/radio_button_op3"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:text="Kosher"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+        </RadioGroup>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/textView_NumberOfMeals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="57dp"
+        android:text="Number of Meals"
+        android:textSize="15dp"
+        android:layout_marginStart="40dp" />
+
+
+    <EditText
+        android:id="@+id/textview_SpinnerValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@id/button_Dec"
+        android:inputType="number"
+        android:text="@string/_0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:autofillHints=""
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/button_Dec" />
+
+    <Button
+        android:id="@+id/button_Dec"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="49dp"
+        android:layout_toRightOf="@id/textView_NumberOfMeals"
+        android:text="-"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textIsSelectable="false" />
+
+
+    <Button
+        android:id="@+id/button_Inc"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginLeft="5dp"
+        android:layout_toRightOf="@id/textview_SpinnerValue"
+        android:layout_marginTop="49dp"
+        android:text="+"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textIsSelectable="false" />
+
+    <Button
+        android:id="@+id/button_next"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_below="@id/button_Inc"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/button_bg_round"
+        android:onClick="add_btn_clicked"
+        android:text="Add"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
 </RelativeLayout>

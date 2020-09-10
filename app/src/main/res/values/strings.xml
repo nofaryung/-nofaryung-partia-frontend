@@ -13,4 +13,7 @@
     <string name="bachelorette_party">Bachelorette party</string>
     <string name="gathering">Gathering</string>
     <string name="next">Next</string>
+    <string name="_0">0</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="login">Login</string>
 </resources>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ActivityStatistics">
+
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/pieChart"
+        android:layout_width="match_parent"
+        android:layout_height="355dp">
+
+
+    </com.github.mikephil.charting.charts.PieChart>
+
+    <TextView
+        android:id="@+id/textView_NumberOfMeals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="57dp"
+        android:text="Number of Meals"
+        android:textSize="15sp"
+        android:layout_marginStart="40dp" />
+
+
+    <EditText
+        android:id="@+id/textview_SpinnerValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginLeft="5dp"
+        android:layout_marginTop="49dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_toRightOf="@id/button_Dec"
+        android:inputType="number"
+        android:text="@string/_0"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:autofillHints=""
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/button_Dec" />
+
+    <Button
+        android:id="@+id/button_Dec"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="49dp"
+        android:layout_toEndOf="@id/textView_NumberOfMeals"
+        android:text="-"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textIsSelectable="false" />
+
+
+    <Button
+        android:id="@+id/button_Inc"
+        android:layout_width="30dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pieChart"
+        android:layout_marginStart="5dp"
+        android:layout_toEndOf="@id/textview_SpinnerValue"
+        android:layout_marginTop="49dp"
+        android:text="+"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textIsSelectable="false" />
+
+</RelativeLayout>
