@@ -14,12 +14,14 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     APIInterface apiInterface;
+    String userSessionEmail;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        userSessionEmail = getIntent().getStringExtra("EXTRA_USER_SESSION_EMAIL");
         apiInterface = APIClient.getClient().create(APIInterface.class);
         ///Create Event
 

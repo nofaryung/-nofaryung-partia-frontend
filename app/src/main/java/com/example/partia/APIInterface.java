@@ -1,6 +1,7 @@
 package com.example.partia;
 
 import com.example.partia.model.Event;
+import com.example.partia.model.LoginRequest;
 import com.example.partia.model.LoginResponse;
 
 import java.util.List;
@@ -19,8 +20,11 @@ public interface APIInterface {
     @GET("/event?")
     Call<Event> doGetEvent(@Query("pin_code") Integer pin_code);
 
-    @GET("/login?")
-    Call<LoginResponse> doLogin(@Query("email","password") Integer pin_code);
+    @POST("/login")
+    Call<LoginResponse> doLogin(@Body LoginRequest loginRequest);
+
+    @POST("/signUp")
+    Call<LoginResponse> doSignUp(@Body LoginRequest loginRequest);
 
 
 }
