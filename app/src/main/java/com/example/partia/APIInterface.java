@@ -3,9 +3,14 @@ package com.example.partia;
 import com.example.partia.model.Event;
 import com.example.partia.model.LoginRequest;
 import com.example.partia.model.LoginResponse;
+import com.example.partia.model.UserEmailHolder;
+import com.example.partia.model.UserEventstList;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,8 +28,14 @@ public interface APIInterface {
     @POST("/login")
     Call<LoginResponse> doLogin(@Body LoginRequest loginRequest);
 
-    @POST("/signUp")
+    @POST("/signup")
     Call<LoginResponse> doSignUp(@Body LoginRequest loginRequest);
+
+    @POST("/participant/events")
+    Call<UserEventstList> doGetUserEvents(@Body UserEmailHolder userEmail);
+
+
+
 
 
 }
