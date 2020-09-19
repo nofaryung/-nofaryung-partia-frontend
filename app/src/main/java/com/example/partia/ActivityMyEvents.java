@@ -2,6 +2,8 @@ package com.example.partia;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,9 +15,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.partia.model.Event;
 import com.example.partia.model.LoginRequest;
 import com.example.partia.model.LoginResponse;
+import com.example.partia.model.MyAdapter;
 import com.example.partia.model.UserEmailHolder;
 import com.example.partia.model.UserEventstList;
 
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -44,29 +50,19 @@ public class ActivityMyEvents extends AppCompatActivity {
     }
 
     private void fetchEvents() {
-        //get all events - owns and participate
-        //Call<Map<String, List<Event>>> userEventsResponseCall = APIClient.getAPIInterface().doGetUserEvents(userSessionEmail);
 
-//        userEventsResponseCall.enqueue(new Callback<Map<String, List<Event>>>() {
-//            @Override
-//            public void onResponse(Call<Map<String, List<Event>>> call, Response<Map<String, List<Event>>> response) {
-//                Map<String, List<Event>> map = new HashMap<>();
-//                map = response.body();
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Map<String, List<Event>>> call, Throwable t) {
-//
-//            }
-//        });
         UserEmailHolder userEmailHolder = new UserEmailHolder(userSessionEmail);
-       // RequestBody body = RequestBody.create(MediaType.parse("application/json"),userEmailHolder);
         Call<UserEventstList> userEventsResponseCall = APIClient.getAPIInterface().doGetUserEvents(userEmailHolder);
         userEventsResponseCall.enqueue(new Callback<UserEventstList>() {
             @Override
             public void onResponse(Call<UserEventstList> call, Response<UserEventstList> response) {
                 UserEventstList map;
                 map = response.body();
+//                ArrayList<Event> own = map.getOwner();
+//                //own.remove(3);
+//                //own.remove(2);
+//
+//                fetchMyEvent(own);
                 fetchMyEvent(map.getOwner());
                 fetchNextEvents(map.getParticipates());
 
@@ -77,36 +73,56 @@ public class ActivityMyEvents extends AppCompatActivity {
 
             }
         });
-//        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,items);
-//        listView_MyEvents.setAdapter(adapter);
-//        listView_NextEvents.setAdapter(adapter);
-//        listView_MyEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                Toast.makeText(ActivityMyEvents.this,items[position],Toast.LENGTH_LONG).show();
-//            }
-//        });
     }
 
-    private void fetchMyEvent(List<Event> owner) {
-        ArrayAdapter<Event> myEvents = new ArrayAdapter<Event>(this, android.R.layout.simple_list_item_1,owner);
-        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,owner);
+    private void fetchMyEvent(ArrayList<Event> owner) {
+        //ArrayAdapter<Event> myEvents = new ArrayAdapter<Event>(this, android.R.layout.simple_list_item_1,owner);
+        //listView_MyEvents.setAdapter(myEvents);
 
-        listView_MyEvents.setAdapter(myEvents);
-        //listView_NextEvents.setAdapter(myEvents);
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,owner);
+        //listView_NextEvents.setAdapter(adapter);
+
+         listView_MyEvents.setAdapter(new MyAdapter(this, owner));
+
+
         listView_MyEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Toast.makeText(ActivityMyEvents.this,owner.get(position).toString(),Toast.LENGTH_LONG).show();
+                Parcelable parcelable = Parcels.wrap(owner.get(position));
+                Intent intent = new Intent(ActivityMyEvents.this, ActivityExistEvent.class);
+                intent.putExtra("EXTRA_EVENT",parcelable);
+                intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
+                startActivity(intent);
             }
         });
     }
 
-    private void fetchNextEvents(List<Event> participates) {
+    private void fetchNextEvents(ArrayList<Event> participates) {
+        //ArrayAdapter<Event> myEvents = new ArrayAdapter<Event>(this, android.R.layout.simple_list_item_1,participates);
+        //listView_NextEvents.setAdapter(myEvents);
+
+        //ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1,owner);
+        //listView_NextEvents.setAdapter(new MyAdapter(this, participates));
+
+        listView_NextEvents.setAdapter(new MyAdapter(this, participates));
+
+        listView_NextEvents.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(ActivityMyEvents.this,participates.get(position).toString(),Toast.LENGTH_LONG).show();
+                Parcelable parcelable = Parcels.wrap(participates.get(position));
+                Intent intent = new Intent(ActivityMyEvents.this, ActivityExistEvent.class);
+                intent.putExtra("EXTRA_EVENT",parcelable);
+                intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
+                startActivity(intent);
+            }
+        });
     }
 
     public void joinEvent_btn_clicked(android.view.View view){
         Intent intent = new Intent(this, ActivityJoinEvent.class);
+        intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
         this.startActivity(intent);
     }
 }

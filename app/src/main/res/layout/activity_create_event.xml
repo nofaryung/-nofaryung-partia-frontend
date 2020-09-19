@@ -74,6 +74,41 @@
     </RelativeLayout>
 
     <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="111dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginRight="20dp">
+
+
+        <TextView
+            android:id="@+id/textViewAddress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adress"
+            android:layout_centerHorizontal="true"
+            android:textColor="@color/blue_partialogi"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editTextAddress"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="20dp"
+            android:ems="10"
+            android:hint="Enter address"
+            android:drawableLeft="@drawable/ic_location"
+            android:inputType="textPersonName" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="20dp"
@@ -91,7 +126,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/editText2"
+            android:id="@+id/editTextEventDescription"
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_marginTop="40dp"

@@ -4,6 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 import java.security.acl.Owner;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.List;
 
@@ -12,24 +13,24 @@ public class UserEventstList {
 
     @SerializedName("owner")
     @Expose
-    private List<Event> owner = null;
+    private ArrayList<Event> owner = null;
     @SerializedName("participates")
     @Expose
-    private List<Event> participates = null;
+    private ArrayList<Event> participates = null;
 
-    public List<Event> getOwner() {
+    public ArrayList<Event> getOwner() {
         return owner;
     }
 
-    public void setOwner(List<Event> owner) {
+    public void setOwner(ArrayList<Event> owner) {
         this.owner = owner;
     }
 
-    public List<Event> getParticipates() {
+    public ArrayList<Event> getParticipates() {
         return participates;
     }
 
-    public void setParticipates(List<Event> participates) {
+    public void setParticipates(ArrayList<Event> participates) {
         this.participates = participates;
     }
 

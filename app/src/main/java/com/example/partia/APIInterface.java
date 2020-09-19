@@ -3,6 +3,7 @@ package com.example.partia;
 import com.example.partia.model.Event;
 import com.example.partia.model.LoginRequest;
 import com.example.partia.model.LoginResponse;
+import com.example.partia.model.ParticipantAnswers;
 import com.example.partia.model.UserEmailHolder;
 import com.example.partia.model.UserEventstList;
 
@@ -34,6 +35,11 @@ public interface APIInterface {
     @POST("/participant/events")
     Call<UserEventstList> doGetUserEvents(@Body UserEmailHolder userEmail);
 
+    @GET("/event?")
+    Call<Event> doCheckValidPinCode(@Query("pin_code") Integer pin_code,@Query("userEmail") UserEmailHolder userEmail );
+
+    @POST("/participant")
+    Call<Event>  sendParticipantQueryAnswers(@Body ParticipantAnswers answers );
 
 
 

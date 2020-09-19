@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/textView_EventName"
             android:layout_width="match_parent"
             android:layout_height="74dp"
             android:gravity="center"
@@ -36,6 +36,12 @@
             android:inputType="textPersonName"
             android:text=" Participants list" />
 
+        <ListView
+            android:id="@+id/listView_ParticipantsList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -50,17 +56,10 @@
             android:layout_marginTop="105dp"
             android:layout_marginRight="5dp"
             android:layout_marginBottom="20dp"
+            android:onClick="budget_btn_clicked"
             android:background="@color/btnColor_startMenu"
             android:text="budget" />
 
-        <Button
-            android:id="@+id/button_rideBoard"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_marginBottom="20dp"
-            android:background="@color/btnColor_startMenu"
-            android:text=" Catch/add a ride " />
 
         <Button
             android:id="@+id/button_chat"
@@ -69,7 +68,17 @@
             android:layout_marginRight="5dp"
             android:layout_marginBottom="20dp"
             android:background="@color/btnColor_startMenu"
-            android:text="Chat" />
+            android:text="Messages" />
+
+        <Button
+            android:id="@+id/button_statistics"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="20dp"
+            android:background="@color/btnColor_startMenu"
+            android:onClick="statistics_btn_clicked"
+            android:text="Show statistics " />
 
         <Button
             android:id="@+id/button_equipmentList"
@@ -77,6 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:background="@color/btnColor_startMenu"
+            android:onClick="equipmentList_btn_clicked"
             android:text="equipment list" />
     </LinearLayout>
 </LinearLayout>

@@ -1,159 +1,189 @@
 package com.example.partia;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
-import androidx.appcompat.app.AppCompatActivity;
-import java.util.HashMap;
-import kotlin.Metadata;
-import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import android.widget.Toast;
 
-@Metadata(
-        mv = {1, 1, 15},
-        bv = {1, 0, 3},
-        k = 1,
-        d1 = {"\u0000B\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\n\u0002\u0010\b\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0018\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0000\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u000e\u0010\u0011\u001a\u00020\u00122\u0006\u0010\u0013\u001a\u00020\u0014J\u0012\u0010\u0015\u001a\u00020\u00122\b\u0010\u0016\u001a\u0004\u0018\u00010\u0017H\u0014R\u000e\u0010\u0003\u001a\u00020\u0004X\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\u0005\u001a\u00020\u0006X\u0082\u000e¢\u0006\u0002\n\u0000R\u000e\u0010\u0007\u001a\u00020\bX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\t\u001a\u00020\bX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\n\u001a\u00020\bX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\u000b\u001a\u00020\fX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\r\u001a\u00020\u000eX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\u000f\u001a\u00020\u000eX\u0082.¢\u0006\u0002\n\u0000R\u000e\u0010\u0010\u001a\u00020\u0006X\u0082\u000e¢\u0006\u0002\n\u0000¨\u0006\u0018"},
-        d2 = {"Lcom/example/partia/ActivityQueryForParticipent;", "Landroidx/appcompat/app/AppCompatActivity;", "()V", "btnNext", "Landroid/widget/Button;", "currPage", "", "rb1", "Landroid/widget/RadioButton;", "rb2", "rb3", "rg", "Landroid/widget/RadioGroup;", "textViewPageCount", "Landroid/widget/TextView;", "textViewQuery", "totalNumOfPages", "next_btn_clicked", "", "view", "Landroid/view/View;", "onCreate", "savedInstanceState", "Landroid/os/Bundle;", "app"}
-)
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.partia.model.Event;
+import com.example.partia.model.ParticipantAnswers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.jetbrains.annotations.Nullable;
+import org.parceler.Parcels;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+
 public final class ActivityQueryForParticipent extends AppCompatActivity {
     private TextView textViewPageCount;
     private TextView textViewQuery;
     private RadioGroup rg;
+    private List<RadioButton> radioButtonList = new ArrayList<>(9);
     private RadioButton rb1;
     private RadioButton rb2;
     private RadioButton rb3;
     private Button btnNext;
-    private int totalNumOfPages = 3;
+    private int totalNumOfPages = 4;
     private int currPage = 1;
-    private HashMap _$_findViewCache;
+    private Event currEvent;
+    private String userSessionEmail;
+    ParticipantAnswers answers ;
 
     @SuppressLint("ResourceType")
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(-1300019);
-        View var10001 = this.findViewById(-1000183);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.textView_pageCount)");
-        this.textViewPageCount = (TextView)var10001;
-        var10001 = this.findViewById(-1000088);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.textView_Query)");
-        this.textViewQuery = (TextView)var10001;
-        var10001 = this.findViewById(-1000016);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.rg)");
-        this.rg = (RadioGroup)var10001;
-        var10001 = this.findViewById(-1000143);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.radio_button_op1)");
-        this.rb1 = (RadioButton)var10001;
-        var10001 = this.findViewById(-1000145);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.radio_button_op2)");
-        this.rb2 = (RadioButton)var10001;
-        var10001 = this.findViewById(-1000144);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.radio_button_op3)");
-        this.rb3 = (RadioButton)var10001;
-        var10001 = this.findViewById(-1000106);
-        Intrinsics.checkExpressionValueIsNotNull(var10001, "findViewById(R.id.button_next)");
-        this.btnNext = (Button)var10001;
+        this.setContentView(R.layout.activity_query_for_participent);
+        Parcelable parcelable = getIntent().getParcelableExtra("EXTRA_EVENT");
+        currEvent = Parcels.unwrap(parcelable);
+        userSessionEmail = getIntent().getStringExtra("EXTRA_USER_SESSION_EMAIL");
+        textViewPageCount = findViewById(R.id.textView_pageCount);
+        textViewQuery = findViewById(R.id.textView_Query);
+        rg = findViewById(R.id.rg);
+        initRadioButtonList();
+        btnNext= findViewById(R.id.button_next);
+        answers = new ParticipantAnswers(userSessionEmail, currEvent.getPin_code());
     }
 
-    public final void next_btn_clicked(@NotNull View view) {
-        Intrinsics.checkParameterIsNotNull(view, "view");
-        RadioGroup var10000 = this.rg;
-        if (var10000 == null) {
-            Intrinsics.throwUninitializedPropertyAccessException("rg");
+    private void initRadioButtonList() {
+        radioButtonList.add(0,findViewById(R.id.radio_button_op1));
+        radioButtonList.add(1,findViewById(R.id.radio_button_op2));
+        radioButtonList.add(2,findViewById(R.id.radio_button_op3));
+        radioButtonList.add(3,findViewById(R.id.radio_button_op4));
+        radioButtonList.add(4,findViewById(R.id.radio_button_op5));
+        radioButtonList.add(5,findViewById(R.id.radio_button_op6));
+        radioButtonList.add(6,findViewById(R.id.radio_button_op7));
+        radioButtonList.add(7,findViewById(R.id.radio_button_op8));
+        radioButtonList.add(8,findViewById(R.id.radio_button_op9));
+        radioButtonVisibility(false , new int[]{1,2,3,4,5,6,7,8,9});
+
+        changeQuery();
+
+    }
+
+    private void changeQuery() {
+        rg.clearCheck();
+        if (currPage <= totalNumOfPages) {
+            if (currPage == 1 ) {
+                textViewQuery.setText("Are u a....");
+                radioButtonList.get(0).setText("VEGETARIAN");
+                radioButtonList.get(1).setText("VEGAN");
+                radioButtonList.get(2).setText("KOSHER");
+                radioButtonList.get(3).setText("NONE");
+                radioButtonVisibility(true , new int[]{1,2,3,4});
+            }
+            else if (currPage == 2) {
+                collectAnswers( currPage-1 );
+                textViewQuery.setText("Are you allergic to...");
+                radioButtonList.get(0).setText("PEANUTS");
+                radioButtonList.get(1).setText("LACTOSE FREE");
+                radioButtonList.get(2).setText("GLUTEN FREE");
+                radioButtonList.get(3).setText("NONE");
+                //radioButtonList.get(3).setVisibility(View.GONE);
+                radioButtonVisibility(false , new int[]{4});
+            } else if (currPage == 3) {
+                collectAnswers( currPage-1 );
+                textViewQuery.setText("Choose your glass");
+                radioButtonList.get(0).setText("VODKA");
+                radioButtonList.get(1).setText("GIN");
+                radioButtonList.get(2).setText("ARAK");
+                radioButtonList.get(3).setText("CAMPARI");
+                radioButtonList.get(4).setText("WHISKEY");
+                radioButtonList.get(5).setText("TEQUILA");
+                radioButtonList.get(6).setText("BEAR");
+                radioButtonList.get(7).setText("RED WINE");
+                radioButtonList.get(8).setText("WHITE WINE");
+                radioButtonVisibility(true, new int[]{1, 2, 3, 4, 5, 6, 7, 8, 9});
+            } else if(currPage == 4) {
+                collectAnswers( currPage-1 );
+                textViewQuery.setText("Choose your chaser");
+                radioButtonList.get(0).setText("VODKA");
+                radioButtonList.get(1).setText("GIN");
+                radioButtonList.get(2).setText("ARAK");
+                radioButtonList.get(3).setText("CAMPARI");
+                radioButtonList.get(4).setText("WHISKEY");
+                radioButtonList.get(5).setText("TEQUILA");
+                radioButtonVisibility(false , new int[]{7,8,9});
+                btnNext.setText("Finish");
+            }
+            textViewPageCount.setText( currPage + "/" + totalNumOfPages);
+            currPage++;
+        } else {
+            collectAnswers( currPage-1 );
+            sendAnswersToserver();
         }
+    }
 
-        var10000.clearCheck();
-        if (this.currPage < this.totalNumOfPages) {
-            int var10001 = this.currPage++;
-            TextView var3;
-            RadioButton var4;
-            if (this.currPage == 2) {
-                var3 = this.textViewQuery;
-                if (var3 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("textViewQuery");
+    private void sendAnswersToserver() {
+        Call<Event> eventResponseCall = APIClient.getAPIInterface().sendParticipantQueryAnswers(answers);
+        eventResponseCall.enqueue(new Callback<Event>() {
+            @Override
+            public void onResponse(Call<Event> call, Response<Event> response) {
+                if(response.code() == 200 ){
+                    Parcelable parcelable = Parcels.wrap(response.body());
+                    Intent intent = new Intent(ActivityQueryForParticipent.this, ActivityExistEvent.class);
+                    intent.putExtra("EXTRA_EVENT",parcelable);
+                    intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
+                    startActivity(intent);
                 }
-
-                var3.setText((CharSequence)"Choose your glass");
-                var4 = this.rb1;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb1");
+                if(response.code() == 400){
+                    //Toast.makeText(ActivityJoinEvent.this,"Invalid Pin Code!",Toast.LENGTH_LONG).show();
                 }
-
-                var4.setText((CharSequence)"Vodka");
-                var4 = this.rb2;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb2");
+                if(response.code() == 403) {
+                    // Toast.makeText(ActivityJoinEvent.this,"User Already Exist In Event!",Toast.LENGTH_LONG).show();
                 }
-
-                var4.setText((CharSequence)"Gin");
-                var4 = this.rb3;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb3");
-                }
-
-                var4.setText((CharSequence)"Wine");
             }
 
-            if (this.currPage == 3) {
-                var3 = this.textViewQuery;
-                if (var3 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("textViewQuery");
-                }
+            @Override
+            public void onFailure(Call<Event> call, Throwable t) {
 
-                var3.setText((CharSequence)"Are you allergic to...");
-                var4 = this.rb1;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb1");
-                }
-
-                var4.setText((CharSequence)"Peanuts");
-                var4 = this.rb2;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb2");
-                }
-
-                var4.setText((CharSequence)"Dairy");
-                var4 = this.rb3;
-                if (var4 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("rb3");
-                }
-
-                var4.setText((CharSequence)"Something else");
-                Button var5 = this.btnNext;
-                if (var5 == null) {
-                    Intrinsics.throwUninitializedPropertyAccessException("btnNext");
-                }
-
-                var5.setText((CharSequence)"Finish");
             }
-        } else if (this.currPage == this.totalNumOfPages) {
+        });
+    }
+
+
+    public void next_btn_clicked(android.view.View view) {
+        changeQuery();
+    }
+
+    private void collectAnswers(int question) {
+        int selectedId = rg.getCheckedRadioButtonId();
+        RadioButton radioButton = (RadioButton) findViewById(selectedId);
+        String answer = radioButton.getText().toString();
+        answer.replaceAll(" ", "_");
+        if( question == 1 ){
+            answers.mealPreference = answer;
+        }
+        if( question == 2 ){
+            answers.allergies = radioButton.getText().toString();
+        }
+        if( question == 3 ){
+            answer = answer + "_GLASS";
+            answers.glassPreference = radioButton.getText().toString();
+        }
+        if( question == 4 ){
+            answer = answer + "_CHASER";
+            answers.chaserPreference = radioButton.getText().toString();
         }
 
     }
 
-    public View _$_findCachedViewById(int var1) {
-        if (this._$_findViewCache == null) {
-            this._$_findViewCache = new HashMap();
+    private void radioButtonVisibility(boolean b, int[] ints) {
+        int i;
+        for( i = 0 ; i < ints.length ; i++ ) {
+            radioButtonList.get(ints[i] - 1).setVisibility(b ? View.VISIBLE : View.GONE);
         }
-
-        View var2 = (View)this._$_findViewCache.get(var1);
-        if (var2 == null) {
-            var2 = this.findViewById(var1);
-            this._$_findViewCache.put(var1, var2);
-        }
-
-        return var2;
-    }
-
-    public void _$_clearFindViewByIdCache() {
-        if (this._$_findViewCache != null) {
-            this._$_findViewCache.clear();
-        }
-
     }
 }

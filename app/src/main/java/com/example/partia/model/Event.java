@@ -2,6 +2,9 @@ package com.example.partia.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import org.parceler.Parcel;
+
+@Parcel
 public class Event {
     @SerializedName("name")
     public String name;
@@ -37,6 +40,9 @@ public class Event {
         this.kind_of_event = kind_of_event;
         this.date = date;
         this.meal_organization = meal_organization;
+    }
+
+    public Event() {
     }
 
     public String getName() {
@@ -126,5 +132,21 @@ public class Event {
                 ", meal_organization='" + meal_organization + '\'' +
                 ", pin_code=" + pin_code +
                 '}';
+    }
+
+    public String getOwner() {
+        return owner;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 }
