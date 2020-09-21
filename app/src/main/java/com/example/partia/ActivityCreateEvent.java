@@ -1,12 +1,16 @@
 package com.example.partia;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +28,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.partia.model.Event;
 
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 
@@ -39,7 +44,9 @@ public class ActivityCreateEvent extends AppCompatActivity {
     private EditText editTextEventName;
     private EditText editTextAddress;
     private EditText editTextEventDesctiprion;
+    private  EditText editTextDate;
     String userSessionEmail;
+    private DatePickerDialog.OnDateSetListener dateSetListener;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -48,40 +55,39 @@ public class ActivityCreateEvent extends AppCompatActivity {
         editTextAddress = findViewById(R.id.editTextAddress);
         editTextEventDesctiprion = findViewById(R.id.editTextEventDescription);
         editTextEventName = findViewById(R.id.editTextEventName);
+        editTextDate = findViewById(R.id.editTextDate);
+        editTextDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Calendar calendar = Calendar.getInstance();
+                int year = calendar.get(Calendar.YEAR);
+                int month = calendar.get(Calendar.MONTH);
+                int day = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ActivityCreateEvent.this,
+                        R.style.Theme_AppCompat_Light_Dialog_MinWidth,
+                        dateSetListener,year,month,day);
+                datePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+                datePickerDialog.show();
+            }
+        });
+        dateSetListener = new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                month = month + 1;
+                String date = dayOfMonth + "/" + month + "/" + year;
+                editTextDate.setText(date);
+            }
+        };
     }
 
-        //Places.initialize(getApplicationContext(), "AIzaSyCYd9DNtP8fAnic_H5XwgCef7dmqj_7vB0");
-//        editTextAddress.setFocusable(false);
-//        editTextAddress.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                List<Place.Field> fieldList = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
-//                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(ActivityCreateEvent.this);
-//                startActivityForResult(intent,100);
-//            }
-//        });
-        //apiInterface = APIClient.getClient().create(APIInterface.class);
-        //will send event with some of the values init to query for planner
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if(requestCode == 100 && resultCode == RESULT_OK) {
-//            Place place = Autocomplete.getPlaceFromIntent(data);
-//            editTextAddress.setText(place.getAddress());
-//        }
-//        else if( resultCode == AutocompleteActivity.RESULT_ERROR) {
-//            Status status = Autocomplete.getStatusFromIntent(data);
-//            Toast.makeText(getApplicationContext(), status.getStatusMessage(),Toast.LENGTH_SHORT).show();
-//        }
-//     }
 
     public void startQueryForPlanner(android.view.View view){
         Event event = new Event();
         event.setInfo(editTextEventDesctiprion.getText().toString());
         event.setName(editTextEventName.getText().toString());
         event.setLocation(editTextAddress.getText().toString());
+        event.setDate(editTextDate.getText().toString());
         event.setOwner(userSessionEmail);
         Parcelable parcelable = Parcels.wrap(event);
         Intent intent = new Intent(this, ActivityQueryForPlanner.class);

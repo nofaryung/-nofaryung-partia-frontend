@@ -9,20 +9,20 @@
 
     <TextView
         android:padding="16dp"
-        android:id="@+id/textView_pageCount"
+        android:id="@+id/textView_pageCountt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1/3" />
 
     <TextView
-        android:id="@+id/textView_Query"
+        android:id="@+id/textView_Queryt"
         android:layout_width="225dp"
         android:layout_height="80dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="92dp"
         android:layout_marginTop="35dp"
         android:layout_marginEnd="92dp"
-        android:layout_above="@id/rg"
+        android:layout_above="@id/rgt"
         android:background="@drawable/button_bg_round"
         android:gravity="center"
         android:text="Are you a..."
@@ -33,14 +33,14 @@
 
 
     <RadioGroup
-        android:id="@+id/rg"
+        android:id="@+id/rgt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true">
 
 
         <RadioButton
-            android:id="@+id/radio_button_op1"
+            android:id="@+id/radio_button_op1t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -49,7 +49,7 @@
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/radio_button_op2"
+            android:id="@+id/radio_button_op2t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -58,7 +58,7 @@
             android:textStyle="bold" />
 
         <RadioButton
-            android:id="@+id/radio_button_op3"
+            android:id="@+id/radio_button_op3t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -66,7 +66,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op4"
+            android:id="@+id/radio_button_op4t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -74,7 +74,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op5"
+            android:id="@+id/radio_button_op5t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -82,7 +82,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op6"
+            android:id="@+id/radio_button_op6t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -90,7 +90,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op7"
+            android:id="@+id/radio_button_op7t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -98,7 +98,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op8"
+            android:id="@+id/radio_button_op8t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -106,7 +106,7 @@
             android:textSize="20sp"
             android:textStyle="bold" />
         <RadioButton
-            android:id="@+id/radio_button_op9"
+            android:id="@+id/radio_button_op9t"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="10dp"
@@ -117,10 +117,10 @@
     </RadioGroup>
 
     <Button
-        android:id="@+id/button_next"
+        android:id="@+id/button_nextt"
         android:layout_width="wrap_content"
         android:layout_height="48dp"
-        android:layout_below="@id/rg"
+        android:layout_below="@id/rgt"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_marginTop="20dp"

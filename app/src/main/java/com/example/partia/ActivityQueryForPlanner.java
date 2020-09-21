@@ -15,6 +15,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.partia.model.Event;
 
 import java.util.HashMap;
+import java.util.Map;
+
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import retrofit2.Call;
@@ -38,6 +40,7 @@ public final class ActivityQueryForPlanner extends AppCompatActivity {
     private int currPage = 1;
     Event event;
     String userSessionEmail;
+    Map<String,String> serverAnswers = new HashMap<>();
 
 
 
@@ -57,7 +60,20 @@ public final class ActivityQueryForPlanner extends AppCompatActivity {
         rb4 = findViewById(R.id.radio_button_op4p);
         btnNext = findViewById(R.id.button_nextPlanner);
         changeQuery();
+        initHashMap();
     }
+
+    private void initHashMap() {
+        serverAnswers.put("Birthday party","BIRTHDAY");
+        serverAnswers.put("Bachelorette party","BACHELORETTE");
+        serverAnswers.put("gathering","GATHERING");
+        serverAnswers.put("Indoor","INDOORS");
+        serverAnswers.put("Outdoor","OUTDOORS");
+        serverAnswers.put("NO",null);
+        serverAnswers.put("Yes, each one brings something","MULTIPLE_INCHARGES");
+        serverAnswers.put("Yes, but I'm on it","SINGLE_INCHARGE");
+        serverAnswers.put("Yes, from outsource","OUTSOURCE_INCHARGE");
+     }
 
 
     public void next_btn_inPlanner_clicked(android.view.View view) {
@@ -108,7 +124,7 @@ public final class ActivityQueryForPlanner extends AppCompatActivity {
             public void onResponse(Call<Event> call, Response<Event> response) {
                 if(response.code() == 200 ){
                     Parcelable parcelable = Parcels.wrap(response.body());
-                    Intent intent = new Intent(ActivityQueryForPlanner.this, ActivityExistEvent.class);
+                    Intent intent = new Intent(ActivityQueryForPlanner.this, ActivityQueryForParticipent.class);
                     intent.putExtra("EXTRA_EVENT",parcelable);
                     intent.putExtra("EXTRA_USER_SESSION_EMAIL", userSessionEmail);
                     startActivity(intent);
@@ -133,16 +149,16 @@ public final class ActivityQueryForPlanner extends AppCompatActivity {
         RadioButton radioButton = (RadioButton) findViewById(selectedId);
 
         if( question == 1 ){
-            event.setKind_of_event(radioButton.getText().toString());
+            event.setKind_of_event(serverAnswers.get(radioButton.getText().toString()));
         }
         if( question == 2 ){
-            event.setEnvironment(radioButton.getText().toString());
+            event.setEnvironment(serverAnswers.get(radioButton.getText().toString()));
         }
         if( question == 3 ){
-            event.setMeal_organization(radioButton.getText().toString());
+            event.setMeal_organization(serverAnswers.get(radioButton.getText().toString()));
         }
         if( question == 4 ){
-            event.setBeverage_organization(radioButton.getText().toString());
+            event.setBeverage_organization(serverAnswers.get(radioButton.getText().toString()));
         }
 
     }

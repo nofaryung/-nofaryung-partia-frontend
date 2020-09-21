@@ -6,7 +6,9 @@ import com.example.partia.model.LoginResponse;
 import com.example.partia.model.ParticipantAnswers;
 import com.example.partia.model.UserEmailHolder;
 import com.example.partia.model.UserEventstList;
+import com.example.partia.model.allParticipants;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -41,7 +43,13 @@ public interface APIInterface {
     @POST("/participant")
     Call<Event>  sendParticipantQueryAnswers(@Body ParticipantAnswers answers );
 
+    @GET("/cashier/split?")
+    Call<ArrayList<String>> doGetParticipantsBalance(@Query("pin_code") Integer pin_code);
 
+    @GET("/cashier/owes?")
+    Call<String>doGetParticipantBalance(@Query("pin_code") Integer pin_code, @Query("userEmail") UserEmailHolder userEmail);
 
+    @GET("/event/participants?")
+    Call<allParticipants> doGetParticipants(@Query("pin_code") Integer pin_code);
 
 }

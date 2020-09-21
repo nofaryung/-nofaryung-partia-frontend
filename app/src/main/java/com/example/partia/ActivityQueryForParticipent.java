@@ -32,9 +32,6 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
     private TextView textViewQuery;
     private RadioGroup rg;
     private List<RadioButton> radioButtonList = new ArrayList<>(9);
-    private RadioButton rb1;
-    private RadioButton rb2;
-    private RadioButton rb3;
     private Button btnNext;
     private int totalNumOfPages = 4;
     private int currPage = 1;
@@ -49,24 +46,28 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
         Parcelable parcelable = getIntent().getParcelableExtra("EXTRA_EVENT");
         currEvent = Parcels.unwrap(parcelable);
         userSessionEmail = getIntent().getStringExtra("EXTRA_USER_SESSION_EMAIL");
-        textViewPageCount = findViewById(R.id.textView_pageCount);
-        textViewQuery = findViewById(R.id.textView_Query);
-        rg = findViewById(R.id.rg);
+        textViewPageCount = findViewById(R.id.textView_pageCountt);
+        textViewQuery = findViewById(R.id.textView_Queryt);
+        rg = findViewById(R.id.rgt);
+        initQueryByPleenerDefinition();
         initRadioButtonList();
-        btnNext= findViewById(R.id.button_next);
+        btnNext= findViewById(R.id.button_nextt);
         answers = new ParticipantAnswers(userSessionEmail, currEvent.getPin_code());
     }
 
+    private void initQueryByPleenerDefinition() {
+    }
+
     private void initRadioButtonList() {
-        radioButtonList.add(0,findViewById(R.id.radio_button_op1));
-        radioButtonList.add(1,findViewById(R.id.radio_button_op2));
-        radioButtonList.add(2,findViewById(R.id.radio_button_op3));
-        radioButtonList.add(3,findViewById(R.id.radio_button_op4));
-        radioButtonList.add(4,findViewById(R.id.radio_button_op5));
-        radioButtonList.add(5,findViewById(R.id.radio_button_op6));
-        radioButtonList.add(6,findViewById(R.id.radio_button_op7));
-        radioButtonList.add(7,findViewById(R.id.radio_button_op8));
-        radioButtonList.add(8,findViewById(R.id.radio_button_op9));
+        radioButtonList.add(0,findViewById(R.id.radio_button_op1t));
+        radioButtonList.add(1,findViewById(R.id.radio_button_op2t));
+        radioButtonList.add(2,findViewById(R.id.radio_button_op3t));
+        radioButtonList.add(3,findViewById(R.id.radio_button_op4t));
+        radioButtonList.add(4,findViewById(R.id.radio_button_op5t));
+        radioButtonList.add(5,findViewById(R.id.radio_button_op6t));
+        radioButtonList.add(6,findViewById(R.id.radio_button_op7t));
+        radioButtonList.add(7,findViewById(R.id.radio_button_op8t));
+        radioButtonList.add(8,findViewById(R.id.radio_button_op9t));
         radioButtonVisibility(false , new int[]{1,2,3,4,5,6,7,8,9});
 
         changeQuery();
@@ -74,7 +75,6 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
     }
 
     private void changeQuery() {
-        rg.clearCheck();
         if (currPage <= totalNumOfPages) {
             if (currPage == 1 ) {
                 textViewQuery.setText("Are u a....");
@@ -124,6 +124,8 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
             collectAnswers( currPage-1 );
             sendAnswersToserver();
         }
+        rg.clearCheck();
+
     }
 
     private void sendAnswersToserver() {
@@ -155,27 +157,29 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
 
 
     public void next_btn_clicked(android.view.View view) {
-        changeQuery();
+        if (rg.getCheckedRadioButtonId() != -1) {
+            changeQuery();
+        }
     }
 
     private void collectAnswers(int question) {
         int selectedId = rg.getCheckedRadioButtonId();
-        RadioButton radioButton = (RadioButton) findViewById(selectedId);
+        RadioButton radioButton = findViewById(selectedId);
         String answer = radioButton.getText().toString();
-        answer.replaceAll(" ", "_");
+        answer = answer.replace(" ", "_");
         if( question == 1 ){
             answers.mealPreference = answer;
         }
         if( question == 2 ){
-            answers.allergies = radioButton.getText().toString();
+            answers.allergies = answer;
         }
         if( question == 3 ){
             answer = answer + "_GLASS";
-            answers.glassPreference = radioButton.getText().toString();
+            answers.glassPreference = answer;
         }
         if( question == 4 ){
             answer = answer + "_CHASER";
-            answers.chaserPreference = radioButton.getText().toString();
+            answers.chaserPreference = answer;
         }
 
     }

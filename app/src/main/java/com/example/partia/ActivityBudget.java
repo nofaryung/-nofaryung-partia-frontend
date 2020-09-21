@@ -1,57 +1,99 @@
 package com.example.partia;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.view.Gravity;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
-import java.util.HashMap;
-import kotlin.Metadata;
-import kotlin.jvm.internal.Intrinsics;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
-@Metadata(
-        mv = {1, 1, 15},
-        bv = {1, 0, 3},
-        k = 1,
-        d1 = {"\u0000\"\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0010\u0002\n\u0000\n\u0002\u0018\u0002\n\u0002\b\u0002\n\u0002\u0018\u0002\n\u0002\b\u0002\u0018\u00002\u00020\u0001B\u0005¢\u0006\u0002\u0010\u0002J\u000e\u0010\u0003\u001a\u00020\u00042\u0006\u0010\u0005\u001a\u00020\u0006J\u0012\u0010\u0007\u001a\u00020\u00042\b\u0010\b\u001a\u0004\u0018\u00010\tH\u0014J\u000e\u0010\n\u001a\u00020\u00042\u0006\u0010\u0005\u001a\u00020\u0006¨\u0006\u000b"},
-        d2 = {"Lcom/example/partia/ActivityBudget;", "Landroidx/appcompat/app/AppCompatActivity;", "()V", "back_btn_clicked", "", "view", "Landroid/view/View;", "onCreate", "savedInstanceState", "Landroid/os/Bundle;", "split_btn_clicked", "app"}
-)
-public final class ActivityBudget extends AppCompatActivity {
-    private HashMap _$_findViewCache;
+import com.example.partia.model.Event;
+import com.example.partia.model.UserEmailHolder;
 
-    @SuppressLint("ResourceType")
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
+import java.util.ArrayList;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
+import org.parceler.Parcels;
+
+public final class ActivityBudget extends AppCompatActivity{
+    Event event;
+    String userSessionEmail;
+    TextView textview_balance;
+    TextView textview_currentBalance;
+    Button split;
+    PopupWindow popUp;
+    LinearLayout layout;
+    ListView listView;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.setContentView(-1300015);
-    }
-
-    public final void split_btn_clicked(@NotNull View view) {
-        Intrinsics.checkParameterIsNotNull(view, "view");
-    }
-
-    public final void back_btn_clicked(@NotNull View view) {
-        Intrinsics.checkParameterIsNotNull(view, "view");
-    }
-
-    public View _$_findCachedViewById(int var1) {
-        if (this._$_findViewCache == null) {
-            this._$_findViewCache = new HashMap();
+        setContentView(R.layout.activity_budget);
+        Parcelable parcelable = getIntent().getParcelableExtra("EXTRA_EVENT");
+        event = Parcels.unwrap(parcelable);
+        userSessionEmail = getIntent().getStringExtra("EXTRA_USER_SESSION_EMAIL");
+        textview_balance = findViewById(R.id.textview_balance);
+        textview_currentBalance = findViewById(R.id.textview_currentBalance);
+        layout = new LinearLayout(ActivityBudget.this);
+        listView = new ListView(this);
+        popUp = new PopupWindow(this);
+        split = findViewById(R.id.button_split);
+        if(userSessionEmail.equals(event.getOwner())) {
+            textview_balance.setVisibility(View.GONE);
+            textview_currentBalance.setVisibility(View.GONE);
+            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            layout.setOrientation(LinearLayout.VERTICAL);
+            createListView();
+            layout.addView(listView, params);
+            popUp.setContentView(layout);
+            // popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
         }
-
-        View var2 = (View)this._$_findViewCache.get(var1);
-        if (var2 == null) {
-            var2 = this.findViewById(var1);
-            this._$_findViewCache.put(var1, var2);
-        }
-
-        return var2;
     }
 
-    public void _$_clearFindViewByIdCache() {
-        if (this._$_findViewCache != null) {
-            this._$_findViewCache.clear();
-        }
+    private void createListView() {
+        Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.getPin_code());
+        userEventsResponseCall.enqueue(new Callback<ArrayList<String>>() {
+            @Override
+            public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
+                ArrayList<String> map = response.body();
+                ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(ActivityBudget.this,android.R.layout.simple_list_item_1,map);
+                listView.setAdapter(itemsAdapter);
+            }
+            @Override
+            public void onFailure(Call<ArrayList<String>> call, Throwable t) {
 
+            }
+        });
+    }
+
+    public void split_btn_clicked(View view) {
+        if(userSessionEmail == event.getOwner()) {
+            popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
+            popUp.update(50, 50, 300, 80);
+        } else {
+            Call<String> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantBalance(event.getPin_code(),new UserEmailHolder(userSessionEmail));
+            userEventsResponseCall.enqueue(new Callback<String>() {
+                @Override
+                public void onResponse(Call<String> call, Response<String> response) {
+                    textview_currentBalance.setText(response.body());
+                }
+
+                @Override
+                public void onFailure(Call<String> call, Throwable t) {
+
+                }
+            });
+
+        }
     }
 }

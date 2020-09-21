@@ -63,7 +63,7 @@ public class ActivitySignUp extends AppCompatActivity {
                         }
                     },700);
                 }else {
-                    Toast.makeText(ActivitySignUp.this,"User doesn't exist!",Toast.LENGTH_LONG).show();
+                    Toast.makeText(ActivitySignUp.this,"User exist!",Toast.LENGTH_LONG).show();
                 }
             }
 
