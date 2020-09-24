@@ -93,6 +93,7 @@ public class ActivityCreateEvent extends AppCompatActivity {
         Intent intent = new Intent(this, ActivityQueryForPlanner.class);
         intent.putExtra("EXTRA_USER_SESSION_EMAIL", userSessionEmail);
         intent.putExtra("EXTRA_EVENT",parcelable);
+        Toast.makeText(ActivityCreateEvent.this,"There are some question you need to answer so we can help you create your dream event ",Toast.LENGTH_LONG).show();
         this.startActivity(intent);
     }
 }

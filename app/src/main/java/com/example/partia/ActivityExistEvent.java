@@ -73,9 +73,10 @@ public class ActivityExistEvent extends AppCompatActivity {
 
 
     public void equipmentList_btn_clicked(View view) {
-        Intent intent = new Intent(ActivityExistEvent.this, ActivityExistEvent.class);
-        intent.putExtra("EXTRA_PINCODE",currEvent.getPin_code());
+        Parcelable parcelable = Parcels.wrap(currEvent);
+        Intent intent = new Intent(ActivityExistEvent.this, ActivityEquipmentList.class);
         intent.putExtra("EXTRA_USER_SESSION_EMAIL", userSessionEmail);
+        intent.putExtra("EXTRA_EVENT",parcelable);
         startActivity(intent);
     }
 
@@ -88,10 +89,16 @@ public class ActivityExistEvent extends AppCompatActivity {
     }
 
     public void statistics_btn_clicked(View view) {
-        Parcelable parcelable = Parcels.wrap(currEvent);
         Intent intent = new Intent(ActivityExistEvent.this, ActivityStatistics.class);
+        Parcelable parcelable = Parcels.wrap(currEvent);
         intent.putExtra("EXTRA_EVENT",parcelable);
         intent.putExtra("EXTRA_USER_SESSION_EMAIL", userSessionEmail);
         startActivity(intent);
+    }
+
+    public void backToMyEvents_btn_clicked(View view) {
+        Intent intent = new Intent(ActivityExistEvent.this, ActivityMyEvents.class);
+        intent.putExtra("EXTRA_USER_SESSION_EMAIL", userSessionEmail);
+        this.startActivity(intent);
     }
 }

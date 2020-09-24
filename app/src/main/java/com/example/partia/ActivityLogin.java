@@ -46,34 +46,53 @@ public class ActivityLogin extends AppCompatActivity {
     }
 
     public void login(){
-        LoginRequest loginRequest = new LoginRequest();
-        loginRequest.setUserEmail(email.getText().toString());
-        loginRequest.setPassword(password.getText().toString());
+        if(validateEmail(email.getText().toString())) {
+            LoginRequest loginRequest = new LoginRequest();
+            loginRequest.setUserEmail(email.getText().toString());
+            loginRequest.setPassword(password.getText().toString());
 
-        Call<LoginResponse> loginResponseCall = APIClient.getAPIInterface().doLogin(loginRequest);
-        loginResponseCall.enqueue(new Callback<LoginResponse>() {
-            @Override
-            public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
-                if(response.isSuccessful()){
-                    Toast.makeText(ActivityLogin.this,"Login Successful",Toast.LENGTH_LONG).show();
-                    new Handler().postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent intent = new Intent(ActivityLogin.this,MainActivity.class);
-                            intent.putExtra("EXTRA_USER_SESSION_EMAIL", response.body().getUserEmail());
-                            startActivity(intent);
-                           // startActivity(new Intent(ActivityLogin.this,MainActivity.class).putExtra("data", lognResponse..getUserId()));
-                        }
-                    },700);
-                }else {
-                    Toast.makeText(ActivityLogin.this,"Login Failed!",Toast.LENGTH_LONG).show();
+            Call<LoginResponse> loginResponseCall = APIClient.getAPIInterface().doLogin(loginRequest);
+            loginResponseCall.enqueue(new Callback<LoginResponse>() {
+                @Override
+                public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
+                    if (response.isSuccessful()) {
+                        Toast.makeText(ActivityLogin.this, "Login Successful", Toast.LENGTH_LONG).show();
+                        new Handler().postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                Intent intent = new Intent(ActivityLogin.this, MainActivity.class);
+                                intent.putExtra("EXTRA_USER_SESSION_EMAIL", response.body().getUserEmail());
+                                startActivity(intent);
+                                // startActivity(new Intent(ActivityLogin.this,MainActivity.class).putExtra("data", lognResponse..getUserId()));
+                            }
+                        }, 700);
+                    } else {
+                        Toast.makeText(ActivityLogin.this, "Login Failed!", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
 
-            @Override
-            public void onFailure(Call<LoginResponse> call, Throwable t) {
-                Toast.makeText(ActivityLogin.this,"Throwable" + t.getLocalizedMessage(),Toast.LENGTH_LONG).show();
-            }
-        });
+                @Override
+                public void onFailure(Call<LoginResponse> call, Throwable t) {
+                    //  Toast.makeText(ActivityLogin.this,"Throwable" + t.getLocalizedMessage(),Toast.LENGTH_LONG).show();
+                }
+            });
+        }
+    }
+
+    private boolean validateEmail(String i_email) {
+
+
+        if (i_email.isEmpty() || !isValidEmail(i_email)) {
+           // email.setError("Email is not valid.");
+            //email.requestFocus();
+           // return false;
+            return true;
+        }
+
+        return true;
+    }
+
+    private static boolean isValidEmail(String email) {
+        return !TextUtils.isEmpty(email) && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

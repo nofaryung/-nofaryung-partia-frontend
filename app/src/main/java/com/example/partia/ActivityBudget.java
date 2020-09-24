@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -56,12 +57,24 @@ public final class ActivityBudget extends AppCompatActivity{
             createListView();
             layout.addView(listView, params);
             popUp.setContentView(layout);
-            // popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
+            popUp.setWindowLayoutMode(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT);
+            popUp.setHeight(1);
+            popUp.setWidth(1);
+            popUp.setFocusable(true);
         }
     }
 
     private void createListView() {
-        Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.getPin_code());
+      //  Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.getPin_code());
+//        ArrayList<String> map = new ArrayList<>();
+//        map.add("Noam\":-23.36");
+//        map.add("Nofar\":166");
+//        map.add("Or\":11");
+//        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(ActivityBudget.this,android.R.layout.simple_list_item_1,map);
+//        listView.setAdapter(itemsAdapter);
+        Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.pin_code);
         userEventsResponseCall.enqueue(new Callback<ArrayList<String>>() {
             @Override
             public void onResponse(Call<ArrayList<String>> call, Response<ArrayList<String>> response) {
@@ -77,15 +90,15 @@ public final class ActivityBudget extends AppCompatActivity{
     }
 
     public void split_btn_clicked(View view) {
-        if(userSessionEmail == event.getOwner()) {
-            popUp.showAtLocation(layout, Gravity.BOTTOM, 10, 10);
-            popUp.update(50, 50, 300, 80);
+        if(userSessionEmail.equals(event.getOwner())) {
+            popUp.showAtLocation(layout, Gravity.CENTER, 10, 10);
         } else {
-            Call<String> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantBalance(event.getPin_code(),new UserEmailHolder(userSessionEmail));
+            Call<String> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantBalance(userSessionEmail, event.pin_code);
             userEventsResponseCall.enqueue(new Callback<String>() {
                 @Override
                 public void onResponse(Call<String> call, Response<String> response) {
-                    textview_currentBalance.setText(response.body());
+                    String res = response.body();
+                    textview_currentBalance.setText(res);
                 }
 
                 @Override
@@ -96,4 +109,5 @@ public final class ActivityBudget extends AppCompatActivity{
 
         }
     }
+
 }

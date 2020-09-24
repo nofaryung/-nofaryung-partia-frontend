@@ -41,8 +41,8 @@ public final class ActivityJoinEvent extends AppCompatActivity {
 
     public void join_event_btn_clicked(android.view.View view) {
         pinCode = Integer.parseInt(textview_PINcode.getText().toString());
-        UserEmailHolder userEmailHolder = new UserEmailHolder(userSessionEmail);
-        Call<Event> eventResponseCall = APIClient.getAPIInterface().doCheckValidPinCode(pinCode, userEmailHolder);
+        //UserEmailHolder userEmailHolder = new UserEmailHolder(userSessionEmail);
+        Call<Event> eventResponseCall = APIClient.getAPIInterface().doCheckValidPinCode(pinCode, userSessionEmail);
         eventResponseCall.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {

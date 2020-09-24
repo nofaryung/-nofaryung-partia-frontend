@@ -140,12 +140,6 @@ public final class ActivityQueryForParticipent extends AppCompatActivity {
                     intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
                     startActivity(intent);
                 }
-                if(response.code() == 400){
-                    //Toast.makeText(ActivityJoinEvent.this,"Invalid Pin Code!",Toast.LENGTH_LONG).show();
-                }
-                if(response.code() == 403) {
-                    // Toast.makeText(ActivityJoinEvent.this,"User Already Exist In Event!",Toast.LENGTH_LONG).show();
-                }
             }
 
             @Override
