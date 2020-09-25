@@ -67,13 +67,6 @@ public final class ActivityBudget extends AppCompatActivity{
     }
 
     private void createListView() {
-      //  Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.getPin_code());
-//        ArrayList<String> map = new ArrayList<>();
-//        map.add("Noam\":-23.36");
-//        map.add("Nofar\":166");
-//        map.add("Or\":11");
-//        ArrayAdapter<String> itemsAdapter = new ArrayAdapter<String>(ActivityBudget.this,android.R.layout.simple_list_item_1,map);
-//        listView.setAdapter(itemsAdapter);
         Call<ArrayList<String>> userEventsResponseCall = APIClient.getAPIInterface().doGetParticipantsBalance(event.pin_code);
         userEventsResponseCall.enqueue(new Callback<ArrayList<String>>() {
             @Override

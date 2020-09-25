@@ -15,6 +15,8 @@ import com.example.partia.model.LoginResponse;
 import com.example.partia.model.UserEmailHolder;
 
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
+
 import kotlin.Metadata;
 import kotlin.jvm.internal.Intrinsics;
 import retrofit2.Call;
@@ -35,14 +37,13 @@ public final class ActivityJoinEvent extends AppCompatActivity {
         setContentView(R.layout.activity_join_event);
         textview_PINcode = findViewById(R.id.textview_PINcode);
         userSessionEmail = getIntent().getStringExtra("EXTRA_USER_SESSION_EMAIL");
-        //apiInterface = APIClient.getClient().create(APIInterface.class);
     }
 
 
-    public void join_event_btn_clicked(android.view.View view) {
+    public void join_event_btn_clicked(android.view.View view) throws InterruptedException {
         pinCode = Integer.parseInt(textview_PINcode.getText().toString());
-        //UserEmailHolder userEmailHolder = new UserEmailHolder(userSessionEmail);
         Call<Event> eventResponseCall = APIClient.getAPIInterface().doCheckValidPinCode(pinCode, userSessionEmail);
+        TimeUnit.SECONDS.sleep(1);
         eventResponseCall.enqueue(new Callback<Event>() {
             @Override
             public void onResponse(Call<Event> call, Response<Event> response) {
@@ -52,7 +53,6 @@ public final class ActivityJoinEvent extends AppCompatActivity {
                     intent.putExtra("EXTRA_EVENT",parcelable);
                     intent.putExtra("EXTRA_USER_SESSION_EMAIL",userSessionEmail);
                     startActivity(intent);
-                    //user doesn't exist in event and event exist
                 }
                 if(response.code() == 400){
                     //invalid pin code
